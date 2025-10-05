@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Alumni</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fa;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Back button */
+  .back-button {
+    display: block;
+    width: fit-content;
+    margin: 25px auto;
+    padding: 10px 15px;
+    background-color: #00385e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s;
+  }
+
+  .back-button:hover {
+    background-color: #002b44;
+  }
+
+  /* Alumni section */
+  .alumni-section {
+    padding: 30px 20px;
+    max-width: 1200px;
+    margin: 20px auto 50px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+  }
+
+  .section-header h2 {
+    color: #003366;
+    margin: 0;
+    font-size: 1.8rem;
+  }
+
+  /* Add alumni form */
+  .add-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .add-form input {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    
+  }
+
+  .add-form button {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #00385e;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .add-form button:hover {
+    background-color: #002b44;
+  }
+   
+  /* Alumni cards */
+  .alumni-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    justify-items: center;
+    gap: 20px;
+  }
+
+  .alumni-card {
+    background: #dadbdb9f;
+    color: #000;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    position: relative;
+  }
+
+  .alumni-card:hover {
+    background-color: #89959c;
+  }
+
+  .alumni-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.1rem;
+  }
+
+  .alumni-card p {
+    margin: 0 0 10px 0;
+    font-size: 0.95rem;
+  }
+
+  .delete-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: #d9534f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 2px 6px;
+    font-size: 0.8rem;
+    text-decoration: none;
+  }
+
+  .delete-btn:hover {
+    background: #b52b27;
+  }
+  
+</style>
+</head>
+<body>
+
+<a href="/" class="back-button">← Back to Home</a>
+
+<section class="alumni-section">
+  <div class="section-header">
+    <h2>Our Alumni</h2>
+  </div>
+
+ {% if role == 'admin' %}
+<form action="/add_alumni" method="POST">
+    <input type="text" name="name" placeholder="Alumni Name" required>
+    <input type="text" name="company" placeholder="Company / Role" required>
+    <button type="submit">Add</button>
+</form>
+{% endif %}
+
+<div class="alumni-grid">
+    {% for alumni in alumni_list %}
+        <div class="alumni-card">
+            {% if role == 'admin' %}
+            <a href="/delete_alumni/{{ alumni[0] }}" class="delete-btn">X</a>
+            {% endif %}
+            <h3>{{ alumni[1] }}</h3>
+            <p>{{ alumni[2] }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+
+  
+  </div>
+</section>
+
+</body>
+</html>

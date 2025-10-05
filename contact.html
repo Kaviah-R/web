@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - IT Department</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+  <style>
+/* General body and container */
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fa;
+    margin: 0;
+    padding: 0;
+}
+
+.contact-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 25px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Headings and paragraphs */
+h1, h2 {
+    text-align: center;
+    color: #003366;
+}
+
+p {
+    color: black;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+input, textarea {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #00385e;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #002b44;
+}
+
+/* Flash messages */
+.flash.success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #c3e6cb;
+    text-align: center;
+}
+
+.flash.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #f5c6cb;
+    text-align: center;
+}
+
+/* Back button */
+.back-button {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    padding: 10px 15px;
+    background-color: #00385e;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    background-color: #002b44;
+}
+/* Contact table Delete link */
+.contact-table a {
+  color: black;         /* Link text color */
+  text-decoration: none; /* Remove underline */
+  font-weight: bold;
+}
+
+.contact-table a:hover {
+  color: #d9534f;       /* Red on hover */
+  text-decoration: underline;
+}
+
+
+/* Admin contact table styling */
+
+</style>
+
+    
+  </style>
+</head>
+<body>
+
+<a href="{{ url_for('home') }}" class="back-button">← Back to Home</a>
+
+<div class="contact-container">
+  <h1>IT Department - Contact Us</h1>
+
+  <!-- Flash messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+{% if role == 'student' %}
+<h2>Contact Us</h2>
+<form action="/contact" method="POST">
+  <input type="text" name="name" placeholder="Your Name" required>
+  <input type="email" name="email" placeholder="Your Email" required>
+  <input type="text" name="subject" placeholder="Subject" required>
+  <textarea name="message" placeholder="Message" required></textarea>
+  <button type="submit">Send</button>
+</form>
+{% endif %}
+
+{% if role == 'admin' %}
+<h2>Contact Messages</h2>
+<table class="contact-table">
+
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Subject</th>
+    <th>Message</th>
+    <th>Action</th>
+  </tr>
+  {% for msg in messages %}
+  <tr>
+    <td>{{ msg[0] }}</td>
+    <td>{{ msg[1] }}</td>
+    <td>{{ msg[2] }}</td>
+    <td>{{ msg[3] }}</td>
+    <td>{{ msg[4] }}</td>
+    <td>
+      <a href="/delete_contact/{{ msg[0] }}">Delete</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<br>
+  <h2>Contact Details</h2><br>
+  <p><strong>Department:</strong> IT Department, Nadar Saraswathi College Of Arts And Science</p>
+  <p><strong>Phone:</strong> +91-XXXXXXXXXX</p>
+  <p><strong>Email:</strong> itdept@gmail.com</p>
+  <p><strong>Address:</strong> Vadapudhupatti, Theni, Tamil Nadu, India</p>
+</div>
+
+</body>
+</html>

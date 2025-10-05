@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty - IT Department</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    .faculty-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 15px;
+      text-align: center;
+      position: relative;
+    }
+    .card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    .add-button, .delete-button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      text-decoration: none;
+      color: #fff;
+      cursor: pointer;
+    }
+    .add-button { background-color: #28a745; }
+    .delete-button { background-color: #dc3545; }
+    .back-button {
+      display: inline-block;
+      margin: 15px;
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <a href="/" class="back-button">← Back to Home</a>
+
+  <header>
+      <h1>Faculty Members</h1>
+      {% if role == 'admin' %}
+        <a href="{{ url_for('add_faculty_route') }}" class="add-button">+ Add Faculty</a>
+      {% endif %}
+  </header>
+
+  <main class="faculty-cards">
+      {% for f in faculty_list %}
+      <div class="card">
+          <img src="{{ url_for('static', filename='images/' + f[4]) }}" alt="{{ f[1] }}">
+          <h2>{{ f[1] }}</h2>
+          <p>{{ f[2] }}</p>
+          <p>{{ f[3] }}</p>
+          {% if role == 'admin' %}
+            <a href="{{ url_for('delete_faculty_route', faculty_id=f[0]) }}" class="delete-button">Delete</a>
+          {% endif %}
+      </div>
+      {% endfor %}
+  </main>
+
+  <footer>
+      <p>&copy; 2025 IT Department | Nadar Saraswathi College Of Arts and Science (Autonomous)</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events - IT Department</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f7fa; margin: 0; padding: 0; }
+    .container { max-width: 1000px; margin: 20px auto; padding: 25px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    h1, h2 { text-align: center; color: #003366; }
+    h3 { color: #00509e; margin-bottom: 5px; }
+    ul { list-style-type: none; padding-left: 0; }
+    li { background: #9f9e9e; margin: 8px 0; padding: 10px 15px; border-radius: 6px; position: relative; }
+   li:hover{background-color: #ccc;} form { margin: 10px 0 20px 0; display: flex; flex-wrap: wrap; gap: 10px; }
+    input { padding: 5px 8px; border-radius: 5px; border: 1px solid #ccc; flex: 1 1 200px; }
+    button { padding: 6px 12px; border: none; border-radius: 5px; background-color: #00385e; color: white; cursor: pointer; }
+    button:hover { background-color: #002b44; }
+    .delete-btn { position: absolute; right: 10px; top: 10px; background: #d9534f; color: #fff; border: none; border-radius: 4px; padding: 2px 6px; cursor: pointer; }
+    .delete-btn:hover { background: #b52b27; }
+    .back-button { display: block; width: fit-content; margin: 20px auto; padding: 10px 15px; background-color: #00385e; color: white; text-decoration: none; border-radius: 5px; text-align: center; font-weight: bold; }
+    .back-button:hover { background-color: #002b44; }
+  </style>
+</head>
+<body>
+
+<a href="{{ url_for('home') }}" class="back-button">← Back to Home</a>
+
+<div class="container">
+  <h1>Events</h1>
+
+  <!-- WORKSHOPS -->
+  <h2>Workshops</h2>
+
+{% if role == 'admin' %}
+<!-- Admin-only Add Workshop Form -->
+<form action="/add_workshop" method="POST">
+    <input type="text" name="course" placeholder="Course" required>
+    <input type="date" name="date" required>
+    <input type="text" name="title" placeholder="Title" required>
+    <input type="text" name="guest_lecturer" placeholder="Guest Lecturer" required>
+    <button type="submit">Add Workshop</button>
+</form>
+{% endif %}
+
+<ul>
+{% for w in workshops %}
+    <li>
+        {{ w.title }} - {{ w.course }} - {{ w.date }} - {{ w.guest_lecturer }}
+        {% if role == 'admin' %}
+        <a href="/delete_workshop/{{ w.id }}">Delete</a>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+<hr>
+
+<h2>Culturals</h2>
+
+{% if role == 'admin' %}
+<form action="/add_cultural" method="POST">
+    <input type="text" name="event_name" placeholder="Event Name" required>
+    <button type="submit">Add Cultural</button>
+</form>
+{% endif %}
+
+<ul>
+{% for c in culturals %}
+    <li>
+        {{ c.event_name }}
+        {% if role == 'admin' %}
+        <a href="/delete_cultural/{{ c.id }}">Delete</a>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+<hr>
+
+<h2>Industrial Visits</h2>
+
+{% if role == 'admin' %}
+<form action="/add_visit" method="POST">
+    <input type="text" name="location" placeholder="Location" required>
+    <button type="submit">Add Visit</button>
+</form>
+{% endif %}
+
+<ul>
+{% for v in visits %}
+    <li>
+        {{ v.location }}
+        {% if role == 'admin' %}
+        <a href="/delete_visit/{{ v.id }}">Delete</a>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+<hr>
+
+<h2>Tech Fest</h2>
+
+{% if role == 'admin' %}
+<form action="/add_techfest" method="POST">
+    <input type="text" name="event_name" placeholder="Event Name" required>
+    <button type="submit">Add TechFest</button>
+</form>
+{% endif %}
+
+<ul>
+{% for t in techfest %}
+    <li>
+        {{ t.event_name }}
+        {% if role == 'admin' %}
+        <a href="/delete_techfest/{{ t.id }}">Delete</a>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+</div>
+</body>
+</html>

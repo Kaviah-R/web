@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Department Home</title>
+
+  <!-- CSS File -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <style>
+    /* Make all links white */
+    
+    a {
+      color: rgb(24, 24, 24);
+      text-decoration: none;
+    }
+    a:hover {
+      color: #ffcc00;
+      text-decoration: underline;
+    }
+    a:visited {
+      color: rgb(59, 48, 161);
+    }
+
+    /* Scroll-to-Top Button */
+    #scrollTopBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #b7c7d7;
+      color: white;
+      padding: 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: none;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transition: background 0.3s, transform 0.3s;
+      z-index: 1000;
+    }
+    #scrollTopBtn:hover {
+      background: #00264d;
+      transform: scale(1.1);
+    }
+    /* Body with background image */
+    body {
+      background-image: url('{{ url_for('static', filename='images/global.jpeg') }}');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    /* Alumni Section */
+.alumni-section {
+    padding: 50px 20px;
+    background-color: rgba(0, 0, 0, 0.6); /* Slight transparent dark overlay */
+    text-align: center;
+}
+
+.alumni-section h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #08539d;
+}
+
+.alumni-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+.alumni-card {
+    background-color: #ffffff; /* solid dark blue */
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 250px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    transition: transform 0.3s, background-color 0.3s;
+    color: white;
+    text-align: center;
+}
+
+.alumni-card:hover {
+    transform: translateY(-5px);
+    background-color: #e1e4e8; /* slightly lighter on hover */
+}
+
+.alumni-card h3 {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.alumni-card p {
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+
+   .logout-container {
+    display: flex;
+    justify-content: flex-end; /* push to the right */
+    padding: 15px 30px;        /* space around */
+}
+
+.logout-btn {
+    background-color: #e3e4e9;
+    color: rgb(18, 17, 17);
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: #e4e7ee;
+}
+
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <h1>Department of Information Technology</h1>
+     
+  </header>
+  
+
+  <!-- Navigation -->
+  <nav>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/courses">Courses</a></li>
+      <li><a href="/faculty">Faculty</a></li>
+      <li><a href="/student">Student</a></li>
+      <li><a href="/events">Events</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li><a href="/gallery">Gallery</a></li>
+    </ul>
+  </nav>
+  <div class="logout-container">
+    {% if role %}
+    <a href="/logout" class="logout-btn">Logout</a>
+    {% endif %}
+</div>
+
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 style="color:#08539d">Welcome to the IT Department</h1>
+   <p style="color: white;">Innovating for the Digital Future</p>
+    <a href="{{ url_for('courses') }}" class="btn">Explore Courses</a>
+  </section>
+
+  <!-- About Preview -->
+  <section class="main-content-area">
+    <h2 style="color:#08539d">About the Department</h2>
+    <p style="color: white;">
+      The Department of Information Technology offers high-quality education and training in the field of IT. 
+      Our students gain strong technical skills, practical knowledge, and industry-ready expertise.
+    </p>
+    <a href="{{ url_for('about') }}" class="btn">Read More</a>
+  </section>
+
+  <!-- Quick Links / Modules -->
+  <section class="courses-page">
+    <h2>Explore Our Modules</h2>
+    <div class="courses-grid">
+      <div class="course-sem">
+         
+        <h4>Courses</h4>
+        <p>View all IT courses offered from Semester 1 to 6.</p>
+        <a href="/courses" class="course-sem">Read more</a>
+      </div>
+      <div class="course-sem">
+        <h4>Faculty</h4>
+        <p>Meet our experienced and dedicated faculty members.</p>
+        <a href="/faculty" class="course-sem">Read more</a>
+      </div>
+      <div class="course-sem">
+        <h4>Alumni</h4>
+        <p>See the achievements of our notable alumni.</p>
+        <a href="/alumni" class="course-sem">Read more</a>
+      </div>
+      <div class="course-sem">
+        <h4>Events</h4>
+        <p>Stay updated on seminars, workshops, and other events.</p>
+        <a href="/events" class="course-sem">Read more</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Faculty -->
+  <section class="faculty-cards">
+    <h2 style="color:#08539d">Featured Faculty</h2>
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/hod.jpg') }}" alt="Faculty 1">
+      <h2>N.Ambika Devi</h2>
+      <p>Head of Department</p>
+    </div>
+    <div class="card">
+      <img src="{{ url_for('static', filename='images/coo.jpg') }}" alt="Faculty 2">
+      <h2>M.Bhanu Priya</h2>
+      <p>Coordinator</p>
+    </div>
+  </section>
+
+  <!-- Alumni -->
+  <section class="alumni-section">
+    <h2>Our Alumni</h2>
+    <div class="alumni-grid">
+      <div class="alumni-card">
+        <h3>Mohara Priya B</h3>
+        <p>Technical Executive, FLP Labs</p>
+      </div>
+      <div class="alumni-card">
+        <h3>Saravana Priya</h3>
+        <p>TCS Chennai, Technical Executive</p>
+      </div>
+      <div class="alumni-card">
+        <h3>Sathya Priya</h3>
+        <p>TCS Chennai, Technical Executive</p>
+      </div>
+    </div><br>
+    <a href="{{ url_for('student') }}" class="btn" style="margin-top:20px;">View All Alumni</a>
+  </section>
+
+  <!-- Events -->
+  <section class="events">
+    <h2 class="main-heading">Upcoming Events</h2>
+    <ul>
+      <li><b>Hackathon:</b> 20th September 2025</li>
+      <li><b>Seminar on AI:</b> 25th September 2025</li>
+      <li><b>Placement Drive:</b> 30th September 2025</li>
+    </ul>
+  </section>
+
+  <!-- Call-to-Action -->
+  <section class="main-content-area">
+    <h2 style="color:#08539d">Get Started with IT</h2>
+    <p>Explore courses, join events, and connect with our faculty and alumni.</p>
+    <a href="{{ url_for('contact') }}" class="btn">Contact Us</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>Department of Information Technology | Nadar Saraswathi College Of Arts and Science  | Email: itdept@gmail.com | Phone: +91 12345 67890</p>
+  </footer>
+
+  <!-- Scroll-to-Top Button -->
+  <button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+
+  <script>
+    const scrollBtn = document.getElementById('scrollTopBtn');
+    window.onscroll = function() {
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        scrollBtn.style.display = "block";
+      } else {
+        scrollBtn.style.display = "none";
+      }
+    };
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
